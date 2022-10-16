@@ -1,3 +1,4 @@
+import click
 from flask import Flask
 
 app = Flask(__name__)
@@ -7,6 +8,20 @@ app = Flask(__name__)
 def hello_world():  # put application's code here
     return 'Hello World!'
 
+@app.route('/hi')
+@app.route('/hello')
+def say_hello():
+    return '<h1>Hello, Flask</h1>'
+
+
+@app.route('/greet', defaults={'name': 'Programmer'})
+@app.route('/greet/<name>')
+def greet(name):
+    return '<h1>Hello, %s</h1>' % name
+
+@app.cli.command()
+def hello():
+    click.echo('Hello, Human!')
 
 if __name__ == '__main__':
     app.run()
